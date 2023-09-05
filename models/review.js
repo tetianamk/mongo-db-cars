@@ -16,9 +16,10 @@ const reviewShema = new Schema({
   isRecommended: {
     type: Boolean
   },
-  carId: {
+  car: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'Car'
   }
 },{
   timestamps: true

@@ -10,6 +10,8 @@ module.exports.createReview = async (req, res, next) =>{
       car: car._id
     });
 
+    await car.updateOne({ $push: { reviews: review._id }});
+
     res.status(201).send({ data: review});
 
   } catch (error) {
@@ -35,7 +37,7 @@ module.exports.getCarReviews = async (req, res, next) =>{
 
     const carReview = await Review.find({
       car: car._id
-    });
+    }).populate('car');
 
     res.send({ data: carReview});
 
