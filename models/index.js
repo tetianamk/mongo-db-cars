@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const CONSTANTS = require('../constants');
-const Car = require('./car')
+const Car = require('./car');
+const Review = require('./review');
 
 
 async function connectDB() {
@@ -10,5 +11,6 @@ async function connectDB() {
 connectDB().catch(err => console.log(err));
 
 module.exports = {
-  Car
+  Car,
+  Review
 };
