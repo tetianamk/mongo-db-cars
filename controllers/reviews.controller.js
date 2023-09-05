@@ -7,7 +7,7 @@ module.exports.createReview = async (req, res, next) =>{
 
     const review = await Review.create({
       ...body,
-      carId: car._id
+      car: car._id
     });
 
     res.status(201).send({ data: review});
@@ -34,7 +34,7 @@ module.exports.getCarReviews = async (req, res, next) =>{
     const { car } = req;
 
     const carReview = await Review.find({
-      carId: car._id
+      car: car._id
     });
 
     res.send({ data: carReview});
@@ -50,7 +50,7 @@ module.exports.getReview = async (req, res, next) =>{
 
     const review = await Review.findOne({
       _id: reviewId,
-      carId
+      car: carId
     });
 
     if(!review) {
@@ -71,7 +71,7 @@ module.exports.updateReview = async (req, res, next) =>{
 
     const updateReview = await Review.findOneAndUpdate({
       _id: reviewId,
-      carId
+      car: carId
     }, body, {new: true});
 
     if(!updateReview) {
@@ -91,7 +91,7 @@ module.exports.deleteReview = async (req, res, next) =>{
 
     const review = await Review.findOneAndDelete({
       _id: reviewId,
-      carId
+      car: carId
     });
 
     if(!review) {
@@ -99,7 +99,7 @@ module.exports.deleteReview = async (req, res, next) =>{
     }
 
     res.send({ data: review});
-    
+
   } catch (error) {
     next(error);
   }

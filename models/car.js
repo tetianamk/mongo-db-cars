@@ -22,7 +22,11 @@ const carSchema = new Schema({
   isInsurance: {
     type: Boolean,
     required: true
-  }
+  },
+  reviews: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Review'
+  }]
 },
 {
   timestamps: true
