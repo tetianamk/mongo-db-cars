@@ -33,7 +33,11 @@ module.exports.getCar = async (req, res, next) => {
     
     const { params: {carId} } = req;
 
-    const car = await Car.findById(carId);
+    const car = await Car.findById(carId, {
+      name: 1,
+      mileage: 1,
+      isInsurance: 1
+    });
 
     res.send({data: car});
 

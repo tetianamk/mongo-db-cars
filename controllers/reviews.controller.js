@@ -1,16 +1,15 @@
 const createHttpError = require('http-errors');
+const ReviewService = require('../services/reviewService');
 const { Review, Car} = require('../models');
 
 module.exports.createReview = async (req, res, next) =>{
   try {
     const {car, body} =req;
 
-    const review = await Review.create({
+    const review = await ReviewService.createReview({
       ...body,
-      car: car._id
+      car
     });
-
-    await car.updateOne({ $push: { reviews: review._id }});
 
     res.status(201).send({ data: review});
 
@@ -22,7 +21,7 @@ module.exports.createReview = async (req, res, next) =>{
 module.exports.getAllReviews = async (req, res, next) =>{
   try {
 
-   const reviews = await Review.find();
+   const reviews = await ReviewService.findReviews();
 
    res.send({data: reviews});
     
@@ -35,9 +34,12 @@ module.exports.getCarReviews = async (req, res, next) =>{
   try {
     const { car } = req;
 
-    const carReview = await Review.find({
+    const carReview = await ReviewService.findReviews({
       car: car._id
-    }).populate('car');
+    }, '-__v', {
+      path: 'car',
+      select: 'name yearOfVehicle isInsurance'
+    });
 
     res.send({ data: carReview});
 
